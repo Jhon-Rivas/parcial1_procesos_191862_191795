@@ -23,7 +23,13 @@ public class Articulo {
     @Column(length = 300, nullable = false)
     private String descripcion;
     private Date fechaRegistro;
+    @ManyToMany
+    @JoinColumn(name = "Id_Categoria")
+    private Categoria categoria;
+    @Column(nullable = false)
     private int stock;
+    @Column(nullable = false, scale = 2)
     private double precioVenta;
+    @Column(nullable = false, scale = 2)
     private double precioCompra;
 }

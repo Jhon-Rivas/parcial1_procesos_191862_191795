@@ -5,21 +5,18 @@ import com.parcial1191862191795.almacen.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
+@RestController
 public class CategoriaController{
     @Autowired
     private CategoriaRepository categoriaRepository;
 
     @GetMapping(value = "/categoria/{id}")
     public ResponseEntity getCategoria(@PathVariable Long id){
-        Optional<Categoria> categoria= categoriaRepository.findByCategoria(id);
+        Optional<Categoria> categoria= categoriaRepository.findById(id);
         if(categoria.isPresent()){
             return new ResponseEntity(categoria, HttpStatus.OK);
         }
@@ -32,6 +29,7 @@ public class CategoriaController{
             categoriaRepository.save(categoria);
             return new ResponseEntity(categoria, HttpStatus.CREATED);
         }catch (Exception e){
+            System.out.println(e.fillInStackTrace());
             return ResponseEntity.badRequest().build();
         }
     }

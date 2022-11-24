@@ -1,7 +1,6 @@
 package com.parcial1191862191795.almacen.services;
 
 import com.parcial1191862191795.almacen.models.Categoria;
-import com.parcial1191862191795.almacen.repository.ArticuloRepository;
 import com.parcial1191862191795.almacen.repository.CategoriaRepository;
 import com.parcial1191862191795.almacen.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;

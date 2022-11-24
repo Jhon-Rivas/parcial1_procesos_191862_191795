@@ -1,8 +1,6 @@
 package com.parcial1191862191795.almacen.controllers;
 
-import com.parcial1191862191795.almacen.models.Articulo;
 import com.parcial1191862191795.almacen.models.Usuario;
-import com.parcial1191862191795.almacen.services.ArticuloService;
 import com.parcial1191862191795.almacen.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

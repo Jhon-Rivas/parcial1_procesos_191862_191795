@@ -2,6 +2,8 @@ package com.parcial1191862191795.almacen.controllers;
 
 import com.parcial1191862191795.almacen.models.Categoria;
 import com.parcial1191862191795.almacen.repository.CategoriaRepository;
+import com.parcial1191862191795.almacen.services.CategoriaService;
+import com.parcial1191862191795.almacen.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,33 +15,42 @@ import java.util.Optional;
 public class CategoriaController{
     @Autowired
     private CategoriaRepository categoriaRepository;
+    @Autowired
+    private CategoriaService categoriaService;
+
+    @Autowired
+    private JWTUtil jwtUtil;
+
 
     @GetMapping(value = "/categoria/{id}")
-    public ResponseEntity getCategoria(@PathVariable Long id){
-        Optional<Categoria> categoria= categoriaRepository.findById(id);
-        if(categoria.isPresent()){
-            return new ResponseEntity(categoria, HttpStatus.OK);
+    public ResponseEntity getCategoria(@PathVariable Long id, @RequestHeader(value = "Authorization") String token) {
+        try{
+            if(jwtUtil.getKey(token) == null){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no valido");
+            }
+            return categoriaService.getCategoria(id);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no valido");
         }
-        return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/categoria")
-    public ResponseEntity crearCategoria (@RequestBody Categoria categoria){
+    public ResponseEntity crearCategoria (@RequestBody Categoria categoria, @RequestHeader(value = "Authorization") String token) {
         try{
-            categoriaRepository.save(categoria);
-            return new ResponseEntity(categoria, HttpStatus.CREATED);
+            if(jwtUtil.getKey(token) == null){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no valido");
+            }
+            return categoriaService.createCategoria(categoria);
         }catch (Exception e){
-            System.out.println(e.fillInStackTrace());
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no valido");
         }
     }
 
     @GetMapping("/categorias")
-    public ResponseEntity listarCategorias(){
-        List<Categoria> categorias = categoriaRepository.findAll();
-        if (categorias.isEmpty()){
-            return ResponseEntity.notFound().build();
+    public ResponseEntity listarCategorias(@RequestHeader(value = "Authorization") String token) {
+        if(jwtUtil.getKey(token) == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no valido");
         }
-        return new ResponseEntity(categorias,HttpStatus.OK);
+        return categoriaService.allCategorias();
     }
 }

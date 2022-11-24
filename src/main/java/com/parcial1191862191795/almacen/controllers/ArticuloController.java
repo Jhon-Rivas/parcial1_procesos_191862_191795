@@ -36,8 +36,15 @@ public class ArticuloController {
     }
 
     @PostMapping("/articulo")
-    public ResponseEntity crearArticulo (@Valid @RequestBody Articulo articulo){
+    public ResponseEntity crearArticulo (@Valid @RequestBody Articulo articulo, @RequestHeader(value = "Authorization") String token) {
+        try{
+            if(jwtUtil.getKey(token) == null){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no valido");
+            }
             return articuloService.createArticulo(articulo);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no valido");
+        }
     }
 
     @GetMapping("/articulos")

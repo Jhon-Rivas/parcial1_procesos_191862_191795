@@ -57,6 +57,7 @@ public class ArticuloServiceImpl implements ArticuloService {
                 articuloBD.get().setNombre(articulo.getNombre());
                 articuloBD.get().setDescripcion(articulo.getDescripcion());
                 articuloBD.get().setFechaRegistro(articulo.getFechaRegistro());
+                articuloBD.get().setUsuario(articulo.getUsuario());
                 articuloBD.get().setCategoria(articulo.getCategoria());
                 articuloBD.get().setStock(articulo.getStock());
                 articuloBD.get().setPrecioVenta(articulo.getPrecioVenta());

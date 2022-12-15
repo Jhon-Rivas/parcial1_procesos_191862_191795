@@ -85,8 +85,8 @@ public class UsuarioServiceImpl implements UsuarioService {
             try {
                 usuarioBD.get().setNombre(usuario.getNombre());
                 usuarioBD.get().setApellidos(usuario.getApellidos());
-                usuarioBD.get().setDocumento(usuario.getDocumento());
                 usuarioBD.get().setDireccion(usuario.getDireccion());
+                usuarioBD.get().setDocumento(usuario.getDocumento());
                 usuarioBD.get().setFechaNacimiento(usuario.getFechaNacimiento());
                 usuarioBD.get().setTelefono(usuario.getTelefono());
                 usuarioBD.get().setCorreo(usuario.getCorreo());

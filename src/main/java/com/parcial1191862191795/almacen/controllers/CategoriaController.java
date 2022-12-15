@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+@CrossOrigin(maxAge = 3600)
 @RestController
 public class CategoriaController{
 
@@ -20,13 +22,13 @@ public class CategoriaController{
     private JWTUtil jwtUtil;
 
 
-    @GetMapping(value = "/categoria/{id}")
-    public ResponseEntity getCategoria(@PathVariable Long id, @RequestHeader(value = "Authorization") String token) {
+    @GetMapping(value = "/categoria/{id_ct}")
+    public ResponseEntity getCategoria(@PathVariable Long id_ct, @RequestHeader(value = "Authorization") String token) {
         try{
             if(jwtUtil.getKey(token) == null){
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no valido");
             }
-            return categoriaService.getCategoria(id);
+            return categoriaService.getCategoria(id_ct);
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no valido");
         }
@@ -44,7 +46,7 @@ public class CategoriaController{
         }
     }
 
-    @GetMapping("/categorias")
+    @GetMapping("/categorias/listado")
     public ResponseEntity listarCategorias(@RequestHeader(value = "Authorization") String token) {
         if(jwtUtil.getKey(token) == null){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no valido");

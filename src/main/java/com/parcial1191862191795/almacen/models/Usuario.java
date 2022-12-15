@@ -22,12 +22,12 @@ public class Usuario {
     @NotBlank(message = "los apellidos no puede estar en blanco")
     private String apellidos;
     @NotBlank(message = "el documento no puede estar en blanco")
-    @Column(length = 20, nullable = false)
+    @Column(length = 20, nullable = false,unique = true)
     private String documento;
     @Column(length = 100)
     private String direccion;
     private Date fechaNacimiento;
-    @Column(length = 15)
+    @Column(length = 20)
     private String telefono;
     @Column (unique = true, length = 100, nullable = false)
     @NotBlank(message = "el correo no puede estar en blanco")

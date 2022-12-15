@@ -24,6 +24,8 @@ public class Articulo {
     private String descripcion;
     private Date fechaRegistro;
     @ManyToOne
+    private Usuario usuario;
+    @ManyToOne
     private Categoria categoria;
     @Column(nullable = false)
     private int stock;

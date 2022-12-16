@@ -133,4 +133,13 @@ public class UsuarioServiceImpl implements UsuarioService {
         return ResponseEntity.notFound().build();
     }
 
+    @Override
+    public ResponseEntity getUsuarioByCorreo(String correo) {
+        Usuario usuario = usuarioRepository.findByCorreo(correo);
+        if(usuario!= null){
+            return new ResponseEntity(usuario, HttpStatus.OK);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }

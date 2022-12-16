@@ -23,13 +23,27 @@ public class UsuarioController {
     private JWTUtil jwtUtil;
 
 
-    @GetMapping(value = "/usuario/{id}")
+    @GetMapping(value = "/usuario/ver/{id}")
     public ResponseEntity getUsuario(@PathVariable Long id, @RequestHeader(value = "Authorization") String token) {
         try {
             if (jwtUtil.getKey(token) == null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no valido");
             }
             return usuarioService.getUserById(id);
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no valido. "+e.getMessage());
+        }
+
+    }
+
+    @GetMapping(value = "/usuario{correo}")
+    public ResponseEntity getUsuarioByCorreo(@PathVariable String correo,
+                                             @RequestHeader(value = "Authorization") String token ){
+        try {
+            if (jwtUtil.getKey(token) == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no valido");
+            }
+            return usuarioService.getUsuarioByCorreo(correo);
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no valido. "+e.getMessage());
         }
@@ -89,7 +103,7 @@ public class UsuarioController {
         }
     }
 
-    @PutMapping("/usuario/{id}")
+    @PutMapping("/usuario/modificar/{id}")
     public ResponseEntity editarUsuario(@PathVariable Long id, @Valid @RequestBody  Usuario usuario, @RequestHeader(value = "Authorization") String token) {
         try {
             if (jwtUtil.getKey(token) == null) {

@@ -22,7 +22,7 @@ public class ArticuloController {
     @Autowired
     private JWTUtil jwtUtil;
 
-    @GetMapping(value = "/articulo/{codigo}")
+    @GetMapping(value = "/articulo/ver/{codigo}")
     public ResponseEntity getArticulo(@PathVariable String codigo, @RequestHeader(value = "Authorization") String token) {
         try{
             if(jwtUtil.getKey(token) == null){
@@ -63,7 +63,7 @@ public class ArticuloController {
         return articuloService.editArticulo(codigo, articulo);
     }
 
-    @DeleteMapping("/articulo/{codigo}")
+    @DeleteMapping("/articulo/eliminar/{codigo}")
     public ResponseEntity eliminarArticulo(@PathVariable String codigo, @RequestHeader(value = "Authorization") String token) {
         if(jwtUtil.getKey(token) == null){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no valido");
